@@ -51,8 +51,9 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   height: 100vh;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: space-evenly;
 }
 
 #container {
@@ -70,4 +71,9 @@ body {
   font-size: 10rem;
   border: 1px solid black;
   box-sizing: border-box;
+}
+
+#restart {
+  font-size: 4rem;
+  padding: 10px;
 }

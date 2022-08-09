@@ -9,7 +9,7 @@ const gameboard = (() => {
 
   return {
     getBoard,
-    update,
+    update
   };
 })();
 
@@ -50,7 +50,7 @@ const displayController = (() => {
         div.textContent = mark;
         numMoves++;
         if(isWinner(mark)) {
-          alert(`player ${curPlayer === playerOne ? 'one' : 'two'} wins`);
+          alert(`player ${mark} wins`);
         } else if(numMoves === 9) {
           alert('tie');
         } else {
@@ -60,14 +60,15 @@ const displayController = (() => {
     });
   });
 
-  // const renderBoard = () => {
-  //   let gridNum = 0;
-  //   for(let i = 0; i < 3; i++)
-  //     for(let j = 0; j < 3; j++)
-  //       grid[gridNum++].textContent = board[i][j];
-  // };
-
-  // return {
-  //   renderBoard,
-  // };
+  const restartButton = document.getElementById('restart');
+  restartButton.addEventListener('click', () => {
+    let gridNum = 0;
+    for(let i = 0; i < 3; i++) {
+      for(let j = 0; j < 3; j++) {
+        gameboard.update(i, j, '');
+        grid[gridNum++].textContent = '';
+      }
+    }
+    numMoves=0;
+  });
 })();
