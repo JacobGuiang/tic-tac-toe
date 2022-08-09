@@ -6,7 +6,6 @@ const gameboard = (() => {
   ];
   const getBoard = () => board;
   const update = (i, j, mark) => board[i][j] = mark;
-
   return {
     getBoard,
     update
@@ -41,6 +40,8 @@ const displayController = (() => {
     return winner;
   }
 
+  const result = document.getElementById('result');
+
   const grid = document.querySelectorAll('#container > div');
   grid.forEach((div) => {
     div.addEventListener('click', () => {
@@ -49,13 +50,11 @@ const displayController = (() => {
         gameboard.update(div.dataset.row, div.dataset.col, mark);
         div.textContent = mark;
         numMoves++;
-        if(isWinner(mark)) {
-          alert(`player ${mark} wins`);
-        } else if(numMoves === 9) {
-          alert('tie');
-        } else {
-          curPlayer = (curPlayer === playerOne ? playerTwo : playerOne);
-        }
+        curPlayer = (curPlayer === playerOne ? playerTwo : playerOne);
+        if(isWinner(mark))
+          result.textContent = `${mark} wins`;
+        else if(numMoves === 9)
+          result.textContent = 'tie';
       }
     });
   });
@@ -70,5 +69,7 @@ const displayController = (() => {
       }
     }
     numMoves=0;
+    result.textContent = '';
+    curPlayer = playerOne;
   });
 })();
