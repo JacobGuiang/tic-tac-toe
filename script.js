@@ -19,8 +19,8 @@ const player = (mark) => {
 
 const displayController = (() => {
   const board = gameboard.getBoard();
-  const playerOne = player('x');
-  const playerTwo = player('o');
+  const playerOne = player('X');
+  const playerTwo = player('O');
   let curPlayer = playerOne;
   let numMoves = 0;
 
