@@ -23,14 +23,39 @@ const displayController = (() => {
   const playerOne = player('X');
   const playerTwo = player('O');
   let curPlayer = playerOne;
+  let numMoves = 0;
+
+  const isWinner = (mark) => {
+    let winner = false;
+
+    for(let i = 0; i < 3; i++)
+      if(board[i][0] === mark && board[i][1] === mark && board[i][2] === mark || board[0][i] === mark && board[1][i] === mark && board[2][i] === mark)
+        winner = true;
+
+    if(board[0][0] === mark && board[1][1] === mark && board[2][2] === mark)
+      winner = true;
+
+    if(board[2][0] === mark && board[1][1] === mark && board[0][2] === mark)
+      winner = true;
+
+    return winner;
+  }
 
   const grid = document.querySelectorAll('#container > div');
   grid.forEach((div) => {
     div.addEventListener('click', () => {
       if(div.textContent.length === 0) {
-        gameboard.update(div.dataset.row, div.dataset.col, curPlayer.getMark());
-        div.textContent = curPlayer.getMark();
-        curPlayer = (curPlayer === playerOne ? playerTwo : playerOne);
+        mark = curPlayer.getMark();
+        gameboard.update(div.dataset.row, div.dataset.col, mark);
+        div.textContent = mark;
+        numMoves++;
+        if(isWinner(mark)) {
+          alert(`player ${curPlayer === playerOne ? 'one' : 'two'} wins`);
+        } else if(numMoves === 9) {
+          alert('tie');
+        } else {
+          curPlayer = (curPlayer === playerOne ? playerTwo : playerOne);
+        }
       }
     });
   });
