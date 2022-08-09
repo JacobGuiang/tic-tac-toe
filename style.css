@@ -79,9 +79,10 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 10rem;
+  font-size: 12rem;
   border: 1px solid black;
   box-sizing: border-box;
+  cursor: pointer;
 }
 
 #restart {
