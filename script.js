@@ -1,40 +1,48 @@
 const gameboard = (() => {
-  let board = [
-    ['X', 'O', 'X'],
-    ['O', 'X', 'X'],
-    ['X', 'O', 'O']
+  const board = [
+    ['', '', ''],
+    ['', '', ''],
+    ['', '', '']
   ];
-
   const getBoard = () => board;
-  const play = (i, j, type) => board[i][j] = type;
+  const update = (i, j, mark) => board[i][j] = mark;
 
   return {
     getBoard,
-    play,
+    update,
   };
 })();
 
-const displayController = (() => {
-  let board = gameboard.getBoard();
-  const grid = document.querySelectorAll('#container > div');
-
-  const renderBoard = () => {
-    let gridNum = 0;
-    for(let i = 0; i < 3; i++)
-      for(let j = 0; j < 3; j++)
-        grid[gridNum++].textContent = board[i][j];
-  };
-
-  return {
-    renderBoard,
-  };
-})();
-
-const player = (type) => {
-  return {type};
+const player = (mark) => {
+  const getMark = () => mark;
+  return {getMark};
 };
 
-const playerOne = player('X');
-const playerTwo = player('O');
+const displayController = (() => {
+  const board = gameboard.getBoard();
+  const playerOne = player('X');
+  const playerTwo = player('O');
+  let curPlayer = playerOne;
 
-displayController.renderBoard();
+  const grid = document.querySelectorAll('#container > div');
+  grid.forEach((div) => {
+    div.addEventListener('click', () => {
+      if(div.textContent.length === 0) {
+        gameboard.update(div.dataset.row, div.dataset.col, curPlayer.getMark());
+        div.textContent = curPlayer.getMark();
+        curPlayer = (curPlayer === playerOne ? playerTwo : playerOne);
+      }
+    });
+  });
+
+  // const renderBoard = () => {
+  //   let gridNum = 0;
+  //   for(let i = 0; i < 3; i++)
+  //     for(let j = 0; j < 3; j++)
+  //       grid[gridNum++].textContent = board[i][j];
+  // };
+
+  // return {
+  //   renderBoard,
+  // };
+})();
